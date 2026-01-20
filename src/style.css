@@ -1,0 +1,588 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 조화로운 컬러 팔레트 */
+  --color-primary-dark: #1B4332;     /* 진한 초록 - 헤더/푸터 */
+  --color-primary: #2D5A3D;          /* 중간 초록 - 메인 배경 */
+  --color-primary-light: #22C55E;    /* 밝은 초록 */
+  --color-lime: #4ADE80;             /* 연두색 - 악센트 */
+  --color-lime-light: #DCFCE7;       /* 아주 연한 연두 */
+  --color-accent: #C04544;           /* 붉은색 - 좀 더 옅게 */
+  --color-accent-light: #D4625F;     /* 밝은 붉은색 */
+  --color-accent-pale: #FDF2F2;      /* 연한 붉은색 배경 */
+  --color-surface: #FFFFFF;          /* 흰색 - 카드 */
+  --color-on-primary: #FFFFFF;
+  --color-on-surface: #1A1A1A;
+  --color-on-surface-variant: #555555;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #FFFFFF;
+  color: #1F2937;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Material Design 카드 - 깔끔한 흰색 배경 */
+.md-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  border: 1px solid #E5E7EB;
+  position: relative;
+}
+
+.md-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #3D7A3D;
+  opacity: 1;
+}
+
+.md-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  border-color: #6AAF6A;
+}
+
+/* 옅은 초록 악센트 카드 - 더 이상 사용하지 않음 */
+.md-card-accent::before {
+  background: #3D7A3D !important;
+}
+
+.md-card-accent:hover {
+  border-color: #6AAF6A;
+}
+
+/* Material Design 버튼 */
+.md-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.md-btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.md-btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12);
+}
+
+.md-btn-outlined {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  box-shadow: none;
+}
+
+.md-btn-outlined:hover {
+  background-color: rgba(76, 175, 80, 0.08);
+}
+
+/* Material Design 칩 - 짙은 초록색 테두리 */
+.md-chip,
+.md-chip-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: transparent;
+  color: #3D7A3D;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid #3D7A3D;
+}
+
+/* Material Design 앱바 */
+.md-appbar {
+  background-color: var(--color-surface);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 미션 번호 스타일 - 옅은 초록색 */
+.mission-number,
+.mission-number-accent {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1;
+  color: rgba(106, 175, 106, 0.3);
+  position: absolute;
+  right: 16px;
+  top: 12px;
+}
+
+/* FAB 스타일 */
+.md-fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.md-fab:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.10);
+  transform: scale(1.05);
+}
+
+/* 스태거드 애니메이션 */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+.stagger-8 { animation-delay: 0.4s; }
+.stagger-9 { animation-delay: 0.45s; }
+.stagger-10 { animation-delay: 0.5s; }
+.stagger-11 { animation-delay: 0.55s; }
+.stagger-12 { animation-delay: 0.6s; }
+
+/* Material Icons 정렬 */
+.material-icons,
+.material-icons-outlined {
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+/* 스크롤바 스타일링 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* 히어로 섹션 - 두 가지 초록색 배경 (이미지 색상 기반) */
+.hero-section {
+  background: #6AAF6A;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 꼬불꼬불한 잎 패턴 1 - 오른쪽 상단 */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -15%;
+  width: 70%;
+  height: 180%;
+  background: #3D7A3D;
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+  transform: rotate(-20deg);
+}
+
+/* 꼬불꼬불한 잎 패턴 2 - 오른쪽 */
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: -5%;
+  width: 45%;
+  height: 100%;
+  background: #3D7A3D;
+  border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%;
+  transform: rotate(15deg);
+}
+
+/* 추가 꼬불꼬불한 잎 모양 장식들 */
+.hero-leaf {
+  position: absolute;
+  background: #3D7A3D;
+  z-index: 1;
+}
+
+.hero-leaf-1 {
+  top: 5%;
+  right: 20%;
+  width: 150px;
+  height: 250px;
+  border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%;
+  transform: rotate(35deg);
+}
+
+.hero-leaf-2 {
+  bottom: 10%;
+  right: 30%;
+  width: 100px;
+  height: 200px;
+  border-radius: 30% 70% 60% 40% / 50% 40% 60% 50%;
+  transform: rotate(-25deg);
+}
+
+.hero-leaf-3 {
+  top: 50%;
+  right: 0%;
+  width: 120px;
+  height: 220px;
+  border-radius: 50% 50% 70% 30% / 60% 40% 50% 50%;
+  transform: rotate(55deg);
+}
+
+@media (max-width: 768px) {
+  .hero-leaf-1,
+  .hero-leaf-2,
+  .hero-leaf-3 {
+    display: none;
+  }
+
+  .hero-section::before {
+    right: -25%;
+    width: 80%;
+  }
+
+  .hero-section::after {
+    right: -15%;
+    width: 55%;
+  }
+}
+
+.hero-main-title {
+  font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-t {
+  color: #E57373;
+}
+
+@media (min-width: 640px) {
+  .hero-main-title {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-main-title {
+    font-size: 4rem;
+  }
+}
+
+.hero-title {
+  color: #FFFFFF;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  z-index: 10;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+  border-radius: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+  z-index: 10;
+}
+
+.hero-verse {
+  background-color: transparent;
+  border-radius: 0;
+  padding: 16px 0;
+  max-width: 600px;
+  margin: 0 auto 32px auto;
+  color: #FFFFFF;
+  border-left: none;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-verse::after {
+  display: none;
+}
+
+.hero-verse-ref {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.hero-stat {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 20px 32px;
+  color: #1B4332;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.hero-stat::before {
+  display: none;
+}
+
+.hero-stat-accent {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 20px 32px;
+  color: #1B4332;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.hero-stat-accent::before {
+  display: none;
+}
+
+/* 카드 영역 - 연한 회색 배경 */
+.green-bg-section {
+  background: #F9FAFB;
+  position: relative;
+}
+
+.green-bg-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #E5E7EB 50%, transparent 100%);
+}
+
+/* 헤더 - 깔끔한 흰색 배경 */
+.green-header {
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.green-header::after {
+  display: none;
+}
+
+/* 공통 규칙 섹션 */
+.common-rules-section {
+  background: #FFFFFF;
+}
+
+.rules-card {
+  background: linear-gradient(135deg, rgba(106, 175, 106, 0.08) 0%, rgba(61, 122, 61, 0.05) 100%);
+  border: 1px solid rgba(106, 175, 106, 0.3);
+}
+
+.rules-icon {
+  color: #3D7A3D;
+}
+
+.rules-title {
+  color: #1B4332;
+}
+
+.rules-list {
+  color: #374151;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.rules-list strong {
+  color: #3D7A3D;
+  font-weight: 600;
+}
+
+.rules-check {
+  color: #6AAF6A;
+}
+
+/* 푸터 - 흰색 배경 */
+.green-footer {
+  background: #FFFFFF;
+  border-top: 1px solid #E5E7EB;
+  position: relative;
+}
+
+.green-footer::before {
+  display: none;
+}
+
+/* 로고 텍스트 - 초록색 강조 */
+.logo-text-white {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #1B4332;
+  letter-spacing: -0.02em;
+}
+
+.logo-t-white {
+  color: #1B4332;
+}
+
+@media (min-width: 640px) {
+  .logo-text-white {
+    font-size: 1.5rem;
+  }
+}
+
+/* 관리자 버튼 - 짙은 초록색 테두리 */
+.admin-btn-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border: 2px solid #2D5A3D;
+  background-color: transparent;
+  color: #2D5A3D;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-btn-white:hover {
+  background-color: #1B4332;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.3);
+}
+
+/* 아이콘 배경/색상 - 옅은 초록 배경 + 짙은 초록색 아이콘 */
+.icon-bg,
+.icon-bg-accent {
+  background: rgba(106, 175, 106, 0.15);
+  border: 1px solid #6AAF6A;
+}
+
+.icon-color,
+.icon-color-accent {
+  color: #3D7A3D;
+}
+
+/* 붉은색 십자가/악센트 */
+.accent-cross {
+  color: #F87171 !important;
+}
+
+.accent-text {
+  color: #EF4444 !important;
+}
+
+/* 로고 텍스트 */
+.logo-text {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #212121;
+  letter-spacing: -0.02em;
+}
+
+.logo-t {
+  color: #EF4444;
+}
+
+@media (min-width: 640px) {
+  .logo-text {
+    font-size: 1.5rem;
+  }
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+  .mission-number,
+  .mission-number-accent {
+    font-size: 2.5rem;
+    right: 12px;
+    top: 8px;
+  }
+}
+
+/* 푸터 텍스트 스타일 */
+.footer-logo {
+  color: #1B4332;
+  font-weight: 600;
+}
+
+.footer-logo .footer-t {
+  color: #1B4332;
+}
+
+.footer-copyright {
+  color: #9CA3AF;
+}
+
+/* 교회 아이콘 스타일 */
+.footer-church-icon {
+  color: #2D5A3D;
+}
+
+/* 추가 장식 요소 */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(74, 222, 128, 0.4) 50%, transparent 100%);
+}
+

@@ -1,0 +1,30 @@
+{
+  "name": "growing-together-in-christ",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "seed": "node src/seed.js",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "bugs": {
+    "url": "https://github.com/Tangeroooo/growing-together-in-christ/issues"
+  },
+  "homepage": "https://github.com/Tangeroooo/growing-together-in-christ#readme",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "autoprefixer": "^10.4.23",
+    "dotenv": "^17.2.3",
+    "flowbite": "^4.0.1",
+    "gh-pages": "^6.3.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.90.1"
+  }
+}

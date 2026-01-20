@@ -1,0 +1,68 @@
+[
+  {
+    "id": "christmas-blessing",
+    "title": "크리스마스 블레싱",
+    "description": "크리스마스 축제에 참여하세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "holy-star",
+    "title": "홀리스타",
+    "description": "홀리스타 행사에 참여하세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "outing",
+    "title": "아웃팅",
+    "description": "순 아웃팅에 참여하세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "extra-meeting",
+    "title": "순모임 시간 외 만남",
+    "description": "순모임 외의 시간에 함께 만나보세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "daily-tithe",
+    "title": "하루끝의 십일조",
+    "description": "하루를 마무리하며 감사를 표현하세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "gap-catch",
+    "title": "순:간포착",
+    "description": "순원들과의 소중한 순간을 포착하세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "group-qt",
+    "title": "순단톡방 큐티나눔",
+    "description": "순단톡방에서 큐티 나눔을 해보세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "group-thanks",
+    "title": "순톡방 감사나눔",
+    "description": "순톡방에서 감사를 나누세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "club-attendance",
+    "title": "동아리 참석",
+    "description": "동아리 활동에 참여하세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "tuesday-meeting",
+    "title": "화요성령집회 참석",
+    "description": "화요 성령 집회에 참여하세요",
+    "condition": "3인 이상 참여"
+  },
+  {
+    "id": "friday-service",
+    "title": "금요 라이브 예배 참석",
+    "description": "금요 라이브 예배에 참여하세요",
+    "condition": "3인 이상 참여"
+  }
+]
