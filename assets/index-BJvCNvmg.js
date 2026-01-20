@@ -47,7 +47,7 @@ ${w}`}class R extends Error{constructor({message:e,code:t,cause:s,name:n}){var i
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex items-center justify-between h-16">
             <a href="#" class="flex items-center">
-              <span class="logo-text-white">13th SNS CROSS Community Friend Group</span>
+              <span class="logo-text-white">13th Friend</span>
             </a>
             <button type="button" id="admin-btn" class="admin-btn-white">
               <span class="material-icons-outlined text-lg">admin_panel_settings</span>
