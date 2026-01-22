@@ -677,3 +677,107 @@ select:focus {
   background: linear-gradient(90deg, transparent 0%, rgba(74, 222, 128, 0.4) 50%, transparent 100%);
 }
 
+/* ========================================
+   관리자 패널 전용 스타일 - 단순하고 명확한 디자인
+   ======================================== */
+
+/* 관리자 카드 - 단순한 흰색 배경 */
+.admin-card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+
+.admin-card:hover {
+  border-color: #D1D5DB;
+}
+
+/* 관리자 폼 카드 */
+.admin-form-card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+}
+
+/* 관리자 성공조건 표시 */
+.admin-condition {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #F3F4F6;
+  color: #6B7280;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* 관리자 추가 버튼 */
+.admin-btn-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  border: 1px solid #374151;
+  background-color: #374151;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-btn-add:hover {
+  background-color: #1F2937;
+  border-color: #1F2937;
+}
+
+/* 관리자 폼 버튼 - Primary */
+.admin-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  background-color: #374151;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-btn-primary:hover {
+  background-color: #1F2937;
+}
+
+/* 관리자 폼 버튼 - Secondary */
+.admin-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  background-color: transparent;
+  color: #6B7280;
+  border: 1px solid #D1D5DB;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-btn-secondary:hover {
+  background-color: #F3F4F6;
+}
+
