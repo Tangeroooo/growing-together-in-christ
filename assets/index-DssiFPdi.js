@@ -422,7 +422,7 @@ ${w}`}class R extends Error{constructor({message:e,code:t,cause:s,name:n}){var i
       <!-- 컨텐츠 -->
       <div class="relative z-10">
         <!-- 아이콘 + 제목 -->
-        <div class="flex items-start gap-4 mb-4 mission-title-row">
+        <div class="flex items-center gap-4 mb-4 mission-title-row">
           <div class="w-14 h-14 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
             <span class="material-icons-outlined icon-color text-3xl">${r.icon||"assignment"}</span>
           </div>
