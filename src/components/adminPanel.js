@@ -268,15 +268,15 @@ function renderMissionForm(isEditing = false, mission = null) {
 
         <div>
           <label for="title" class="block mb-2 text-sm font-semibold text-secondary-700">제목 *</label>
-          <input
-            type="text"
+          <textarea
             id="title"
             name="title"
             required
-            value="${escapeHtml(mission?.title || '')}"
-            class="bg-gray-50 border-2 border-gray-200 text-secondary-800 text-base rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 block w-full p-3 transition-colors"
-            placeholder="미션 제목을 입력하세요"
-          >
+            rows="2"
+            class="bg-gray-50 border-2 border-gray-200 text-secondary-800 text-base rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 block w-full p-3 transition-colors resize-none"
+            placeholder="미션 제목을 입력하세요 (엔터로 줄바꿈 가능)"
+          >${escapeHtml(mission?.title || '')}</textarea>
+          <p class="mt-1 text-xs text-secondary-500">엔터를 누르면 카드에서 줄바꿈됩니다.</p>
         </div>
 
         <div>
@@ -350,8 +350,8 @@ function renderAdminMissionCard(mission, index, totalCount) {
           <div class="w-14 h-14 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
             <span class="material-icons-outlined icon-color text-3xl">${mission.icon || 'assignment'}</span>
           </div>
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-secondary-800">
-            ${escapeHtml(mission.title)}
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-secondary-800 mission-title">
+            ${escapeHtmlWithLineBreaks(mission.title)}
           </h3>
         </div>
 
@@ -569,6 +569,14 @@ function escapeHtml(text) {
   const div = document.createElement('div')
   div.textContent = text
   return div.innerHTML
+}
+
+// 줄바꿈을 지원하는 escapeHtml
+function escapeHtmlWithLineBreaks(text) {
+  if (!text) return ''
+  const div = document.createElement('div')
+  div.textContent = text
+  return div.innerHTML.replace(/\n/g, '<br>')
 }
 
 // === 규칙 관리 함수 ===

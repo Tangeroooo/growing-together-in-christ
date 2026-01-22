@@ -123,12 +123,12 @@ function renderMissionCard(mission, index) {
       <!-- 컨텐츠 -->
       <div class="relative z-10">
         <!-- 아이콘 + 제목 (가로 배치) -->
-        <div class="flex items-start gap-4 mb-4 mission-title-row">
+        <div class="flex items-center gap-4 mb-4 mission-title-row">
           <div class="w-14 h-14 rounded-xl ${iconBgClass} flex items-center justify-center flex-shrink-0">
             <span class="material-icons-outlined ${iconColorClass} text-3xl">${mission.icon || getMissionIcon(index)}</span>
           </div>
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-secondary-800">
-            ${escapeHtml(mission.title)}
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-secondary-800 mission-title">
+            ${escapeHtmlWithLineBreaks(mission.title)}
           </h3>
         </div>
 
@@ -188,4 +188,13 @@ function escapeHtml(text) {
   const div = document.createElement('div')
   div.textContent = text
   return div.innerHTML
+}
+
+// 줄바꿈을 지원하는 escapeHtml
+function escapeHtmlWithLineBreaks(text) {
+  if (!text) return ''
+  const div = document.createElement('div')
+  div.textContent = text
+  // \n을 <br>로 변환
+  return div.innerHTML.replace(/\n/g, '<br>')
 }

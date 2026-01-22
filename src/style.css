@@ -635,7 +635,13 @@ select:focus {
 
 /* 미션 카드 제목 행 - 번호 영역 확보 */
 .mission-title-row {
-  margin-right: 60px;
+  margin-right: 70px;
+}
+
+/* 미션 제목 - 단어 단위 줄바꿈 */
+.mission-title {
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* 반응형 조정 */
@@ -648,7 +654,7 @@ select:focus {
   }
 
   .mission-title-row {
-    margin-right: 45px;
+    margin-right: 55px;
   }
 }
 
