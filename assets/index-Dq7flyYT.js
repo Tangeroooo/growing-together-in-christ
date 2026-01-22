@@ -71,7 +71,7 @@ ${w}`}class R extends Error{constructor({message:e,code:t,cause:s,name:n}){var i
           <!-- 성경 구절 -->
           <div class="hero-verse animate-fade-in-up stagger-1">
             <p class="text-lg sm:text-xl lg:text-2xl font-medium mb-2">
-              보라 형제가 연합하여 동거함이 어찌 그리 선하고 아름다운고
+              보라 형제가 연합하여 동거함이<br class="verse-break"> 어찌 그리 선하고 아름다운고
             </p>
             <p class="hero-verse-ref text-base">시편 133:1</p>
           </div>
@@ -144,11 +144,11 @@ ${w}`}class R extends Error{constructor({message:e,code:t,cause:s,name:n}){var i
       <!-- 컨텐츠 -->
       <div class="relative z-10">
         <!-- 아이콘 + 제목 (가로 배치) -->
-        <div class="flex items-center gap-4 mb-4">
+        <div class="flex items-start gap-4 mb-4 mission-title-row">
           <div class="w-14 h-14 rounded-xl ${i} flex items-center justify-center flex-shrink-0">
             <span class="material-icons-outlined ${a} text-3xl">${r.icon||Kn(e)}</span>
           </div>
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-secondary-800 pr-8">
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-secondary-800">
             ${Ge(r.title)}
           </h3>
         </div>
