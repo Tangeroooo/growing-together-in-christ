@@ -41,7 +41,8 @@ body {
   position: relative;
 }
 
-.md-card::before {
+/* 미션 카드에만 왼쪽 선 적용 */
+.md-card.with-accent::before {
   content: '';
   position: absolute;
   top: 0;
@@ -521,6 +522,75 @@ body {
   background-color: #1B4332;
   color: #FFFFFF;
   box-shadow: 0 4px 12px rgba(27, 67, 50, 0.3);
+}
+
+/* 추가 버튼 스타일 */
+.md-btn-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  border: 1.5px solid #3D7A3D;
+  background-color: #3D7A3D;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.md-btn-add:hover {
+  background-color: #1B4332;
+  border-color: #1B4332;
+  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.3);
+}
+
+/* 폼 버튼 스타일 */
+.md-form-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.md-form-btn-primary {
+  background-color: #3D7A3D;
+  color: #FFFFFF;
+  border: none;
+}
+
+.md-form-btn-primary:hover {
+  background-color: #1B4332;
+}
+
+.md-form-btn-secondary {
+  background-color: transparent;
+  color: #6B7280;
+  border: 1.5px solid #D1D5DB;
+}
+
+.md-form-btn-secondary:hover {
+  background-color: #F3F4F6;
+}
+
+/* 입력 필드 focus 스타일 */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border-color: #6AAF6A !important;
+  box-shadow: 0 0 0 1px #6AAF6A !important;
+  ring: none !important;
 }
 
 /* 아이콘 배경/색상 - 옅은 초록 배경 + 짙은 초록색 아이콘 */

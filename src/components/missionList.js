@@ -113,7 +113,7 @@ function renderMissionCard(mission, index) {
   const iconBgClass = isAccent ? 'icon-bg-accent' : 'icon-bg'
   const iconColorClass = isAccent ? 'icon-color-accent' : 'icon-color'
   const chipClass = isAccent ? 'md-chip-accent' : 'md-chip'
-  const cardClass = isAccent ? 'md-card md-card-accent' : 'md-card'
+  const cardClass = isAccent ? 'md-card md-card-accent with-accent' : 'md-card with-accent'
 
   return `
     <article class="${cardClass} p-5 sm:p-6 relative animate-fade-in-up stagger-${Math.min(index + 1, 12)}">

@@ -7,64 +7,86 @@ export function renderAdminPanel(container, missions, rules, onUpdate, onLogout)
   currentOnUpdate = onUpdate
 
   container.innerHTML = `
-    <nav class="bg-white border-gray-200 dark:bg-gray-900 border-b">
-      <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-primary-700">관리자 패널</span>
-        </a>
-        <div class="flex gap-2">
-          <button type="button" id="logout-btn" class="text-white font-medium rounded-lg text-sm px-4 py-2 transition-colors" style="background-color: #424242;">로그아웃</button>
+    <div class="min-h-screen">
+      <!-- 헤더 -->
+      <header class="green-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <a href="#" class="flex items-center">
+              <span class="logo-text-white">관리자 패널</span>
+            </a>
+            <button type="button" id="logout-btn" class="admin-btn-white">
+              <span class="material-icons-outlined text-lg">logout</span>
+              <span class="hidden sm:inline">로그아웃</span>
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </header>
 
-    <!-- 탭 메뉴 -->
-    <div class="bg-white border-b">
-      <div class="max-w-screen-xl mx-auto px-4">
-        <div class="flex gap-4">
-          <button type="button" id="tab-missions" class="tab-btn px-4 py-3 font-medium border-b-2 transition-colors ${currentTab === 'missions' ? 'border-primary-600 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-700'}">
-            미션 관리
-          </button>
-          <button type="button" id="tab-rules" class="tab-btn px-4 py-3 font-medium border-b-2 transition-colors ${currentTab === 'rules' ? 'border-primary-600 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-700'}">
-            공통 규칙 관리
-          </button>
+      <!-- 탭 메뉴 -->
+      <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex gap-1">
+            <button type="button" id="tab-missions" class="tab-btn px-5 py-3 font-semibold border-b-2 transition-colors ${currentTab === 'missions' ? 'border-primary-600 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-700'}">
+              <span class="material-icons-outlined text-lg align-middle mr-1">assignment</span>
+              미션 관리
+            </button>
+            <button type="button" id="tab-rules" class="tab-btn px-5 py-3 font-semibold border-b-2 transition-colors ${currentTab === 'rules' ? 'border-primary-600 text-primary-700' : 'border-transparent text-gray-500 hover:text-gray-700'}">
+              <span class="material-icons-outlined text-lg align-middle mr-1">rule</span>
+              공통 규칙 관리
+            </button>
+          </div>
         </div>
       </div>
+
+      <!-- 메인 컨텐츠 -->
+      <section class="green-bg-section min-h-screen py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <!-- 미션 관리 탭 -->
+          <div id="missions-tab" class="${currentTab === 'missions' ? '' : 'hidden'}">
+            <div class="flex justify-end mb-6">
+              <button type="button" id="add-mission-btn" class="md-btn-add">
+                <span class="material-icons-outlined text-lg">add</span>
+                미션 추가
+              </button>
+            </div>
+            ${renderMissionForm()}
+            <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-8" id="missions-list">
+              ${missions.map((mission, index) => renderAdminMissionCard(mission, index, missions.length)).join('')}
+            </div>
+            ${missions.length === 0 ? renderEmptyState() : ''}
+          </div>
+
+          <!-- 규칙 관리 탭 -->
+          <div id="rules-tab" class="${currentTab === 'rules' ? '' : 'hidden'}">
+            <div class="flex justify-end mb-6">
+              <button type="button" id="add-rule-btn" class="md-btn-add">
+                <span class="material-icons-outlined text-lg">add</span>
+                규칙 추가
+              </button>
+            </div>
+            ${renderRuleForm()}
+            <div class="space-y-4 mt-8" id="rules-list">
+              ${rules.map((rule, index) => renderAdminRuleCard(rule, index, rules.length)).join('')}
+            </div>
+            ${rules.length === 0 ? renderEmptyRulesState() : ''}
+          </div>
+        </div>
+      </section>
+
+      <!-- 푸터 -->
+      <footer class="green-footer pt-10 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div class="flex items-center justify-center gap-2 mb-4">
+            <span class="material-icons footer-church-icon text-2xl">church</span>
+            <span class="footer-logo text-lg">Growing Together in Chris<span class="footer-t">t</span></span>
+          </div>
+          <p class="footer-copyright text-sm">
+            © 2026 13th SNS CROSS Community Friend Group. All Rights Reserved.
+          </p>
+        </div>
+      </footer>
     </div>
-
-    <section class="bg-primary-50 dark:bg-gray-900 min-h-screen py-12">
-      <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        <!-- 미션 관리 탭 -->
-        <div id="missions-tab" class="${currentTab === 'missions' ? '' : 'hidden'}">
-          <div class="flex justify-end mb-4">
-            <button type="button" id="add-mission-btn" class="text-white font-medium rounded-lg text-sm px-4 py-2 text-center transition-colors" style="background-color: #388E3C;">+ 미션 추가</button>
-          </div>
-          ${renderMissionForm()}
-          <div class="space-y-4 mt-8" id="missions-list">
-            ${missions.map((mission, index) => renderAdminMissionCard(mission, index, missions.length)).join('')}
-          </div>
-          ${missions.length === 0 ? renderEmptyState() : ''}
-        </div>
-
-        <!-- 규칙 관리 탭 -->
-        <div id="rules-tab" class="${currentTab === 'rules' ? '' : 'hidden'}">
-          <div class="flex justify-end mb-4">
-            <button type="button" id="add-rule-btn" class="text-white font-medium rounded-lg text-sm px-4 py-2 text-center transition-colors" style="background-color: #388E3C;">+ 규칙 추가</button>
-          </div>
-          ${renderRuleForm()}
-          <div class="space-y-4 mt-8" id="rules-list">
-            ${rules.map((rule, index) => renderAdminRuleCard(rule, index, rules.length)).join('')}
-          </div>
-          ${rules.length === 0 ? renderEmptyRulesState() : ''}
-        </div>
-      </div>
-    </section>
-
-    <footer class="p-4 bg-white md:p-8 lg:p-10 dark:bg-gray-800 border-t">
-      <div class="mx-auto max-w-screen-xl text-center">
-        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">&copy; 2025 <a href="#" class="hover:underline">Growing Together in Christ</a>. All Rights Reserved.</span>
-      </div>
-    </footer>
   `
 
   // 이벤트 리스너 설정
@@ -233,35 +255,40 @@ function renderMissionForm(isEditing = false, mission = null) {
   ).join('')
 
   return `
-    <div id="mission-form-container" class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 ${isEditing ? '' : 'hidden'}">
-      <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-primary-700">${isEditing ? '미션 수정' : '새 미션 추가'}</h5>
-      <form id="mission-form" class="space-y-4">
+    <div id="mission-form-container" class="md-card p-5 sm:p-6 ${isEditing ? '' : 'hidden'}">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-xl icon-bg flex items-center justify-center">
+          <span class="material-icons-outlined icon-color text-2xl">${isEditing ? 'edit' : 'add_circle'}</span>
+        </div>
+        <h5 class="text-xl sm:text-2xl font-bold text-secondary-800">${isEditing ? '미션 수정' : '새 미션 추가'}</h5>
+      </div>
+      <form id="mission-form" class="space-y-5">
         <input type="hidden" id="mission-id" value="${mission?.id || ''}">
         <input type="hidden" id="mission-sort-order" value="${mission?.sort_order ?? ''}">
 
         <div>
-          <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">제목 *</label>
+          <label for="title" class="block mb-2 text-sm font-semibold text-secondary-700">제목 *</label>
           <input
             type="text"
             id="title"
             name="title"
             required
             value="${escapeHtml(mission?.title || '')}"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            class="bg-gray-50 border-2 border-gray-200 text-secondary-800 text-base rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 block w-full p-3 transition-colors"
             placeholder="미션 제목을 입력하세요"
           >
         </div>
 
         <div>
-          <label for="icon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">아이콘</label>
+          <label for="icon" class="block mb-2 text-sm font-semibold text-secondary-700">아이콘</label>
           <div class="flex items-center gap-3">
-            <div id="icon-preview" class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center border border-gray-300">
-              <span class="material-icons-outlined text-2xl text-gray-600">${selectedIcon}</span>
+            <div id="icon-preview" class="w-14 h-14 rounded-xl icon-bg flex items-center justify-center">
+              <span class="material-icons-outlined text-3xl icon-color">${selectedIcon}</span>
             </div>
             <select
               id="icon"
               name="icon"
-              class="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              class="flex-1 bg-gray-50 border-2 border-gray-200 text-secondary-800 text-base rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 block p-3 transition-colors"
             >
               ${iconOptions}
             </select>
@@ -269,42 +296,35 @@ function renderMissionForm(isEditing = false, mission = null) {
         </div>
 
         <div>
-          <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">설명</label>
+          <label for="description" class="block mb-2 text-sm font-semibold text-secondary-700">설명</label>
           <textarea
             id="description"
             name="description"
             rows="3"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            class="block p-3 w-full text-base text-secondary-800 bg-gray-50 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
             placeholder="미션 설명을 입력하세요"
           >${escapeHtml(mission?.description || '')}</textarea>
         </div>
 
         <div>
-          <label for="condition" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">성공 조건</label>
+          <label for="condition" class="block mb-2 text-sm font-semibold text-secondary-700">성공 조건</label>
           <input
             type="text"
             id="condition"
             name="condition"
             value="${escapeHtml(mission?.condition || '')}"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            class="bg-gray-50 border-2 border-gray-200 text-secondary-800 text-base rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 block w-full p-3 transition-colors"
             placeholder="성공 조건을 입력하세요"
           >
         </div>
 
-        <div class="flex gap-3">
-          <button
-            type="submit"
-            class="flex-1 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none transition-colors"
-            style="background-color: #388E3C;"
-          >
+        <div class="flex gap-2 pt-2">
+          <button type="submit" class="md-form-btn md-form-btn-primary">
+            <span class="material-icons-outlined text-base">${isEditing ? 'check' : 'add'}</span>
             ${isEditing ? '수정' : '추가'}
           </button>
-          <button
-            type="button"
-            id="cancel-form-btn"
-            class="flex-1 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none transition-colors"
-            style="background-color: #616161;"
-          >
+          <button type="button" id="cancel-form-btn" class="md-form-btn md-form-btn-secondary">
+            <span class="material-icons-outlined text-base">close</span>
             취소
           </button>
         </div>
@@ -316,75 +336,82 @@ function renderMissionForm(isEditing = false, mission = null) {
 function renderAdminMissionCard(mission, index, totalCount) {
   const isFirst = index === 0
   const isLast = index === totalCount - 1
+  const missionNumber = String(index + 1).padStart(2, '0')
 
   return `
-    <div class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300">
-      <div class="flex items-start justify-between gap-4">
-        <!-- 순서 변경 버튼 -->
-        <div class="flex flex-col gap-1">
-          <button
-            class="move-up-btn w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            data-id="${mission.id}"
-            ${isFirst ? 'disabled' : ''}
-            title="위로 이동"
-          >
-            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
-            </svg>
-          </button>
-          <button
-            class="move-down-btn w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            data-id="${mission.id}"
-            ${isLast ? 'disabled' : ''}
-            title="아래로 이동"
-          >
-            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
-          </button>
-        </div>
+    <article class="md-card with-accent p-5 sm:p-6 relative">
+      <!-- 미션 번호 -->
+      <span class="mission-number">${missionNumber}</span>
 
-        <!-- 미션 내용 -->
-        <div class="flex-1">
-          <div class="flex items-center gap-3 mb-2">
-            <span class="inline-flex items-center justify-center w-10 h-10 bg-primary-100 text-primary-700 rounded-lg">
-              <span class="material-icons-outlined text-xl">${mission.icon || 'assignment'}</span>
-            </span>
-            <span class="inline-flex items-center justify-center w-6 h-6 bg-gray-200 text-gray-600 text-xs font-bold rounded-full">${index + 1}</span>
-            <h5 class="text-xl font-bold tracking-tight text-gray-900 dark:text-white text-primary-700">${escapeHtml(mission.title)}</h5>
+      <!-- 컨텐츠 -->
+      <div class="relative z-10">
+        <!-- 아이콘 + 제목 -->
+        <div class="flex items-start gap-4 mb-4 mission-title-row">
+          <div class="w-14 h-14 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
+            <span class="material-icons-outlined icon-color text-3xl">${mission.icon || 'assignment'}</span>
           </div>
-          ${mission.description ? `
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">${escapeHtml(mission.description)}</p>
-          ` : ''}
-          ${mission.condition ? `
-            <div class="inline-flex items-center px-3 py-1 text-sm font-medium text-center text-white bg-primary-600 rounded-lg mb-4">
-              <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
-              ${escapeHtml(mission.condition)}
-            </div>
-          ` : ''}
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-secondary-800">
+            ${escapeHtml(mission.title)}
+          </h3>
         </div>
 
-        <!-- 수정/삭제 버튼 -->
-        <div class="flex flex-col gap-2 shrink-0">
+        <!-- 설명 -->
+        ${mission.description ? `
+          <p class="text-secondary-600 text-base sm:text-lg leading-relaxed mb-4">
+            ${escapeHtml(mission.description)}
+          </p>
+        ` : ''}
+
+        <!-- 성공조건 칩 -->
+        <div class="md-chip ${mission.condition ? '' : 'opacity-50'}" style="${mission.condition ? '' : 'border-color: #9CA3AF; color: #9CA3AF;'}">
+          <span class="material-icons text-base">check_circle</span>
+          <span>${mission.condition ? escapeHtml(mission.condition) : '성공조건 미설정'}</span>
+        </div>
+
+        <!-- 관리 버튼들 -->
+        <div class="flex items-center gap-2 mt-4 pt-4 border-t border-gray-200">
+          <!-- 순서 변경 -->
+          <div class="flex items-center gap-1 mr-auto">
+            <button
+              class="move-up-btn w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              data-id="${mission.id}"
+              ${isFirst ? 'disabled' : ''}
+              title="위로 이동"
+            >
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+              </svg>
+            </button>
+            <button
+              class="move-down-btn w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              data-id="${mission.id}"
+              ${isLast ? 'disabled' : ''}
+              title="아래로 이동"
+            >
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- 수정/삭제 -->
           <button
-            class="edit-mission-btn px-4 py-2 text-sm text-white font-medium rounded-lg transition-colors"
-            style="background-color: #388E3C;"
+            class="edit-mission-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors border-2"
+            style="border-color: #388E3C; color: #388E3C; background: transparent;"
             data-id="${mission.id}"
           >
             수정
           </button>
           <button
-            class="delete-mission-btn px-4 py-2 text-sm text-white font-medium rounded-lg transition-colors"
-            style="background-color: #DC2626;"
+            class="delete-mission-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors border-2"
+            style="border-color: #DC2626; color: #DC2626; background: transparent;"
             data-id="${mission.id}"
           >
             삭제
           </button>
         </div>
       </div>
-    </div>
+    </article>
   `
 }
 
@@ -422,46 +449,38 @@ function showEditForm(id, missions) {
   const mission = missions.find(m => m.id === id)
   if (!mission) return
 
-  const container = document.getElementById('app')
-  container.innerHTML = `
-    <nav class="bg-white border-gray-200 dark:bg-gray-900 border-b">
-      <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-primary-700">미션 수정</span>
-        </a>
-        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button type="button" id="back-to-admin-btn" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-800 dark:border-gray-700">돌아가기</button>
-        </div>
-      </div>
-    </nav>
+  const container = document.getElementById('mission-form-container')
+  if (!container) return
 
-    <section class="bg-primary-50 dark:bg-gray-900 min-h-screen py-12">
-      <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        ${renderMissionForm(true, mission)}
-      </div>
-    </section>
-  `
+  // 폼 표시
+  container.classList.remove('hidden')
+  
+  // 폼 제목 변경
+  const formTitle = container.querySelector('h5')
+  if (formTitle) formTitle.textContent = '미션 수정'
+  
+  // 버튼 텍스트 변경
+  const submitBtn = container.querySelector('button[type="submit"]')
+  if (submitBtn) submitBtn.textContent = '수정'
 
-  // hidden 클래스 제거
-  document.getElementById('mission-form-container').classList.remove('hidden')
+  // 폼 값 채우기
+  document.getElementById('mission-id').value = mission.id
+  document.getElementById('mission-sort-order').value = mission.sort_order ?? ''
+  document.getElementById('title').value = mission.title || ''
+  document.getElementById('description').value = mission.description || ''
+  document.getElementById('condition').value = mission.condition || ''
+  
+  // 아이콘 선택
+  const iconSelect = document.getElementById('icon')
+  if (iconSelect) {
+    iconSelect.value = mission.icon || 'assignment'
+    // 아이콘 미리보기 업데이트
+    const iconPreview = document.querySelector('#icon-preview span')
+    if (iconPreview) iconPreview.textContent = mission.icon || 'assignment'
+  }
 
-  document.getElementById('back-to-admin-btn').addEventListener('click', () => {
-    if (currentOnUpdate) currentOnUpdate()
-  })
-
-  document.getElementById('mission-form').addEventListener('submit', async (e) => {
-    e.preventDefault()
-    await handleFormSubmit(missions, true)
-  })
-
-  document.getElementById('cancel-form-btn').addEventListener('click', () => {
-    if (currentOnUpdate) currentOnUpdate()
-  })
-
-  // 아이콘 미리보기 업데이트
-  document.getElementById('icon').addEventListener('change', (e) => {
-    document.querySelector('#icon-preview span').textContent = e.target.value
-  })
+  // 폼으로 스크롤
+  container.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 async function handleFormSubmit(missions, isEditing = false) {
@@ -556,39 +575,37 @@ function escapeHtml(text) {
 
 function renderRuleForm(isEditing = false, rule = null) {
   return `
-    <div id="rule-form-container" class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 ${isEditing ? '' : 'hidden'}">
-      <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-primary-700">${isEditing ? '규칙 수정' : '새 규칙 추가'}</h5>
+    <div id="rule-form-container" class="md-card p-5 sm:p-6 ${isEditing ? '' : 'hidden'}">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-xl icon-bg flex items-center justify-center">
+          <span class="material-icons-outlined icon-color text-2xl">${isEditing ? 'edit' : 'add_circle'}</span>
+        </div>
+        <h5 class="text-xl sm:text-2xl font-bold text-secondary-800">${isEditing ? '규칙 수정' : '새 규칙 추가'}</h5>
+      </div>
       <form id="rule-form" class="space-y-4">
         <input type="hidden" id="rule-id" value="${rule?.id || ''}">
         <input type="hidden" id="rule-sort-order" value="${rule?.sort_order ?? ''}">
 
         <div>
-          <label for="rule-content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">규칙 내용 *</label>
+          <label for="rule-content" class="block mb-2 text-sm font-semibold text-secondary-700">규칙 내용 *</label>
           <textarea
             id="rule-content"
             name="content"
             required
             rows="3"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            class="block p-3 w-full text-base text-secondary-800 bg-gray-50 rounded-xl border-2 border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
             placeholder="규칙 내용을 입력하세요. **텍스트**로 강조 가능"
           >${escapeHtml(rule?.content || '')}</textarea>
-          <p class="mt-1 text-xs text-gray-500">**텍스트** 형식으로 작성하면 굵게 표시됩니다.</p>
+          <p class="mt-2 text-xs text-secondary-500">**텍스트** 형식으로 작성하면 굵게 표시됩니다.</p>
         </div>
 
-        <div class="flex gap-3">
-          <button
-            type="submit"
-            class="flex-1 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none transition-colors"
-            style="background-color: #388E3C;"
-          >
+        <div class="flex gap-2 pt-2">
+          <button type="submit" class="md-form-btn md-form-btn-primary">
+            <span class="material-icons-outlined text-base">${isEditing ? 'check' : 'add'}</span>
             ${isEditing ? '수정' : '추가'}
           </button>
-          <button
-            type="button"
-            id="cancel-rule-btn"
-            class="flex-1 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none transition-colors"
-            style="background-color: #616161;"
-          >
+          <button type="button" id="cancel-rule-btn" class="md-form-btn md-form-btn-secondary">
+            <span class="material-icons-outlined text-base">close</span>
             취소
           </button>
         </div>
@@ -600,64 +617,72 @@ function renderRuleForm(isEditing = false, rule = null) {
 function renderAdminRuleCard(rule, index, totalCount) {
   const isFirst = index === 0
   const isLast = index === totalCount - 1
+  const ruleNumber = String(index + 1).padStart(2, '0')
 
   return `
-    <div class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow-xl transition-shadow duration-300">
-      <div class="flex items-start justify-between gap-4">
-        <!-- 순서 변경 버튼 -->
-        <div class="flex flex-col gap-1 shrink-0">
-          <button
-            class="move-rule-up-btn w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            data-id="${rule.id}"
-            ${isFirst ? 'disabled' : ''}
-            title="위로 이동"
-          >
-            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
-            </svg>
-          </button>
-          <button
-            class="move-rule-down-btn w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            data-id="${rule.id}"
-            ${isLast ? 'disabled' : ''}
-            title="아래로 이동"
-          >
-            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
-          </button>
+    <article class="md-card p-5 sm:p-6 relative">
+      <!-- 규칙 번호 -->
+      <span class="mission-number">${ruleNumber}</span>
+
+      <!-- 컨텐츠 -->
+      <div class="relative z-10">
+        <!-- 아이콘 + 번호 -->
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-xl icon-bg flex items-center justify-center flex-shrink-0">
+            <span class="material-icons-outlined icon-color text-2xl">check_circle</span>
+          </div>
+          <span class="text-lg font-bold text-secondary-600">규칙 ${index + 1}</span>
         </div>
 
         <!-- 규칙 내용 -->
-        <div class="flex-1">
-          <div class="flex items-center gap-3 mb-2">
-            <span class="inline-flex items-center justify-center w-8 h-8 bg-primary-100 text-primary-700 rounded-lg">
-              <span class="material-icons-outlined text-lg">check_circle</span>
-            </span>
-            <span class="inline-flex items-center justify-center w-6 h-6 bg-gray-200 text-gray-600 text-xs font-bold rounded-full">${index + 1}</span>
-          </div>
-          <p class="text-gray-700 dark:text-gray-300">${escapeHtml(rule.content)}</p>
-        </div>
+        <p class="text-secondary-700 text-base sm:text-lg leading-relaxed mb-4 pr-12">
+          ${escapeHtml(rule.content)}
+        </p>
 
-        <!-- 수정/삭제 버튼 -->
-        <div class="flex flex-col gap-2 shrink-0">
+        <!-- 관리 버튼들 -->
+        <div class="flex items-center gap-2 mt-4 pt-4 border-t border-gray-200">
+          <!-- 순서 변경 -->
+          <div class="flex items-center gap-1 mr-auto">
+            <button
+              class="move-rule-up-btn w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              data-id="${rule.id}"
+              ${isFirst ? 'disabled' : ''}
+              title="위로 이동"
+            >
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+              </svg>
+            </button>
+            <button
+              class="move-rule-down-btn w-8 h-8 flex items-center justify-center rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              data-id="${rule.id}"
+              ${isLast ? 'disabled' : ''}
+              title="아래로 이동"
+            >
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- 수정/삭제 -->
           <button
-            class="edit-rule-btn px-4 py-2 text-sm text-white font-medium rounded-lg transition-colors"
-            style="background-color: #388E3C;"
+            class="edit-rule-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors border-2"
+            style="border-color: #388E3C; color: #388E3C; background: transparent;"
             data-id="${rule.id}"
           >
             수정
           </button>
           <button
-            class="delete-rule-btn px-4 py-2 text-sm text-white font-medium rounded-lg transition-colors"
-            style="background-color: #DC2626;"
+            class="delete-rule-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors border-2"
+            style="border-color: #DC2626; color: #DC2626; background: transparent;"
             data-id="${rule.id}"
           >
             삭제
           </button>
         </div>
       </div>
-    </div>
+    </article>
   `
 }
 
