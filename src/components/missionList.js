@@ -3,7 +3,35 @@ function parseMarkdownBold(text) {
   return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
 }
 
+const NEW_MISSION_WINDOW_DAYS = 14
+const DAY_MS = 24 * 60 * 60 * 1000
+
+function parseCreatedAt(createdAt) {
+  if (!createdAt) return null
+  const date = new Date(createdAt)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+function isNewMission(createdAt, nowTs) {
+  const createdAtDate = parseCreatedAt(createdAt)
+  if (!createdAtDate) return false
+
+  const diff = nowTs - createdAtDate.getTime()
+  // 미래 시간은 "새 미션"으로 취급하지 않음
+  if (diff < 0) return false
+  return diff <= NEW_MISSION_WINDOW_DAYS * DAY_MS
+}
+
 export function renderMissionList(container, missions, rules, onAdminClick) {
+  const nowTs = Date.now()
+  const missionEntries = missions.map((mission, index) => ({
+    mission,
+    index,
+    isNew: isNewMission(mission?.created_at, nowTs),
+  }))
+
+  const newMissionEntries = missionEntries.filter(e => e.isNew)
+
   container.innerHTML = `
     <div class="min-h-screen">
       <!-- 초록색 배경 헤더 -->
@@ -57,11 +85,29 @@ export function renderMissionList(container, missions, rules, onAdminClick) {
       <!-- 미션 카드 그리드 - 초록색 배경 -->
       <section class="green-bg-section py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          ${missions.length > 0 ? `
+          ${newMissionEntries.length > 0 ? `
+            <section class="mb-8 sm:mb-10">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="material-icons-outlined text-2xl text-primary-800">new_releases</span>
+                <h2 class="text-lg sm:text-xl font-extrabold text-secondary-900">새로운 미션</h2>
+              </div>
+              <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                ${newMissionEntries.map(({ mission, index }) => renderMissionCard(mission, index)).join('')}
+              </div>
+            </section>
+          ` : ''}
+
+          ${missionEntries.length > 0 ? `
+            ${newMissionEntries.length > 0 ? `
+              <div class="flex items-center gap-2 mb-4">
+                <span class="material-icons-outlined text-2xl text-primary-800">assignment</span>
+                <h2 class="text-lg sm:text-xl font-extrabold text-secondary-900">전체 미션</h2>
+              </div>
+            ` : ''}
             <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              ${missions.map((mission, index) => renderMissionCard(mission, index)).join('')}
+              ${missionEntries.map(({ mission, index }) => renderMissionCard(mission, index)).join('')}
             </div>
-          ` : renderEmptyState()}
+          ` : (newMissionEntries.length === 0 ? renderEmptyState() : '')}
         </div>
       </section>
 
@@ -113,10 +159,10 @@ function renderMissionCard(mission, index) {
   const iconBgClass = isAccent ? 'icon-bg-accent' : 'icon-bg'
   const iconColorClass = isAccent ? 'icon-color-accent' : 'icon-color'
   const chipClass = isAccent ? 'md-chip-accent' : 'md-chip'
-  const cardClass = isAccent ? 'md-card md-card-accent with-accent' : 'md-card with-accent'
+  const baseCardClass = isAccent ? 'md-card md-card-accent with-accent' : 'md-card with-accent'
 
   return `
-    <article class="${cardClass} p-5 sm:p-6 relative animate-fade-in-up stagger-${Math.min(index + 1, 12)}">
+    <article class="${baseCardClass} p-5 sm:p-6 relative animate-fade-in-up stagger-${Math.min(index + 1, 12)}">
       <!-- 미션 번호 -->
       <span class="${numberClass}">${missionNumber}</span>
 
